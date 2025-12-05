@@ -779,84 +779,18 @@ if(elements.sendEmail){
 }
 
 
-if(elements.downloadManual){
-  elements.downloadManual.addEventListener("click", ()=>{
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF({unit:"pt", format:"a4"});
-
-    let y = 40;
-
-    doc.setFontSize(20);
-    doc.text("Manual de Uso - Cotizador Taller Navarro", 40, y); 
-    y += 28;
-
-
-    doc.setFontSize(12);
-    doc.text("Bienvenido al manual de usuario de la aplicación de cotización del Taller Navarro.", 40, y, {maxWidth:500}); 
-    y += 18;
-    doc.text("Esta guía explica paso a paso cómo usar la aplicación para realizar cotizaciones de pintura, grúas y servicios mecánicos.", 40, y, {maxWidth:500});
-    y += 28;
-
-    doc.setFontSize(14);
-    doc.text("1. Selección de Taller y Servicio", 40, y);
-    y += 18;
-    doc.setFontSize(12);
-    doc.text("• Selecciona el taller donde se realizará el servicio.", 48, y, {maxWidth:500}); y += 14;
-    doc.text("• Elige el tipo de servicio: Pintura, Grúa o Mecánica.", 48, y, {maxWidth:500}); y += 14;
-
-
-    doc.setFontSize(14);
-    y += 10;
-    doc.text("2. Selección del Vehículo", 40, y); y += 18;
-    doc.setFontSize(12);
-    doc.text("• Indica si el vehículo es un carro o una moto.", 48, y, {maxWidth:500}); y += 14;
-    doc.text("• Dependiendo del tipo, se mostrarán las piezas disponibles para cotizar.", 48, y, {maxWidth:500}); y += 14;
-
-
-    doc.setFontSize(14);
-    y += 10;
-    doc.text("3. Selección de Piezas y Servicios Mecánicos", 40, y); y += 18;
-    doc.setFontSize(12);
-    doc.text("• Para cada pieza, ingresa la cantidad requerida.", 48, y, {maxWidth:500}); y += 14;
-    doc.text("• Marca los servicios mecánicos que deseas incluir en la cotización.", 48, y, {maxWidth:500}); y += 14;
-
-
-    doc.setFontSize(14);
-    y += 10;
-    doc.text("4. Opciones de Pintura y Grúa", 40, y); y += 18;
-    doc.setFontSize(12);
-    doc.text("• Si eliges Pintura, selecciona si es pintura parcial o pintura total.", 48, y, {maxWidth:500}); y += 14;
-    doc.text("• Si eliges Grúa, indica si es para carro o moto y la cantidad de motos a trasladar.", 48, y, {maxWidth:500}); y += 14;
-    doc.text("• Los beneficios de pintura total incluyen aceite y traslado gratis.", 48, y, {maxWidth:500}); y += 14;
-
-
-    doc.setFontSize(14);
-    y += 10;
-    doc.text("5. Datos del Cliente", 40, y); y += 18;
-    doc.setFontSize(12);
-    doc.text("• Ingresa el nombre y correo electrónico del cliente.", 48, y, {maxWidth:500}); y += 14;
-
-
-    doc.setFontSize(14);
-    y += 10;
-    doc.text("6. Revisión y Envío de Cotización", 40, y); y += 18;
-    doc.setFontSize(12);
-    doc.text("• Verifica el resumen de la cotización con subtotal, descuentos y total.", 48, y, {maxWidth:500}); y += 14;
-    doc.text("• Puedes guardar la cotización en el almacenamiento local para usarla después.", 48, y, {maxWidth:500}); y += 14;
-    doc.text("• Descarga la cotización en PDF o envíala por correo electrónico al cliente.", 48, y, {maxWidth:500}); y += 14;
-
-
-    doc.setFontSize(14);
-    y += 10;
-    doc.text("7. Consejos y recomendaciones", 40, y); y += 18;
-    doc.setFontSize(12);
-    doc.text("• Asegúrate de ingresar correctamente las cantidades y tipos de piezas.", 48, y, {maxWidth:500}); y += 14;
-    doc.text("• Revisa siempre los datos del cliente antes de enviar la cotización.", 48, y, {maxWidth:500}); y += 14;
-
-
-    doc.save("manual_usuario_cotizacion.pdf");
+// Descarga directa del Manual.pdf
+if (elements.downloadManual) {
+  elements.downloadManual.addEventListener("click", () => {
+    const link = document.createElement("a");
+    link.href = "Manual.pdf";          // Archivo a descargar
+    link.download = "Manual.pdf";      // Forzar descarga
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   });
 }
+
 
 
 
