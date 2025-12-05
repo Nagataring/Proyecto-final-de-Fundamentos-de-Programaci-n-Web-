@@ -1,0 +1,108 @@
+
+body {
+  font-family: Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #e7e6e6;
+  text-align: center; 
+  background-image: url(/img/fondo1.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+
+.container {
+  margin-top: 50px;
+  
+}
+
+p {
+  color: #949494;
+  font-family: sans-serif;
+  font-size: 20px;
+  font-style: italic;
+  margin: 40px auto;
+  width: 300px;
+  height:  85px auto;
+  border: 1px solid gray ;
+  background-color: transparent;
+  backdrop-filter: blur(1.8px) ;
+  padding: auto;
+  border-radius: 8px;
+}
+
+h1, h2 {
+  color: #868da4; 
+  font-size: 2.2em; 
+  text-shadow: 2px 2px 4px rgba(8, 20, 255, 0.3);
+  -webkit-text-stroke: 1.5px rgb(43, 48, 60);
+  margin: auto;
+}
+
+h3 {
+  color: #061136;
+  margin: 20PX auto;
+  width: 250px;
+  height:  85px auto;
+  border: 1px solid rgb(128, 128, 128) ;
+  background-color: transparent;
+  backdrop-filter: blur(1.8px) ;
+  padding: auto;
+  border-radius: 8px;
+
+}
+
+
+
+.btn {
+  display: inline-block;
+  padding: 12px 25px;
+  background: #0c155b;
+  color: rgb(255, 255, 255);
+  text-decoration: none;
+  border-radius: 5px;
+  margin-top: 20px;
+  border: 1px solid rgba(48, 47, 47, 0.2);
+  box-shadow: 2px 2px 6px rgba(0,0,0,0.3);
+  font-size: 1.1em;
+}
+.btn:hover {
+  background: #0056b3;
+}
+
+
+
+nav {
+  background-color: transparent;
+  padding: 0px 0px 15px;
+  margin: 100px ;
+}
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+nav ul li {
+  display: inline-block;
+  margin: 0 20px;
+  color: white;
+  font-size: 1.1em;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+
+footer {
+  background: #506589;
+  color: rgb(254, 254, 255);
+  width: 100%;
+  padding: 1px 0;
+  text-align: center;
+  margin-top: auto;
+  
+}

@@ -1,28 +1,196 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Página Principal  Taller Navarro Dava</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title data-i18n="title">Taller Navarro Dava</title>
+
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="assets/main.css">
 </head>
 
-<body class="home-bg">
+<body>
 
-  <div class="home-overlay">
+  <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand header-logo" href="home.html">
+        <img src="assets/logo.svg" alt="logo" width="32" height="32">
+        <span>Taller Navarro Dava</span>
+      </a>
+      <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-    <img src="assets/logo.svg" alt="Logo Taller" class="home-logo">
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link active" href="home.html">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link" href="cotizacion.html">Cotizacion </a></li>
+          <li class="nav-item"><a class="nav-link" href="talleres.html">Talleres</a></li>
+          <li class="nav-item"><a class="nav-link" href="gruas.html">Solicitar Grúa</a></li>
+          <li class="nav-item"><a class="nav-link" href="contactanos.html">Contáctanos</a></li>
+          <li class="nav-item"><a class="nav-link" href="inicio_sesion.html">Iniciar sesión</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 
-    <h1 class="home-title">Bienvenido a Taller Navarro Dava</h1>
+  <div class="tira-textual">
+  <div class="tira-textual-inner">
+    🚗 Servicio de enderezado y pintura — ⚙️ Reparación de motos y autos — 📅 Solicita tu cita online — 🚨 Asistencia de grúa disponible — 🛠 Revisamos tu vehículo con aseguradoras INS, LAFISE y QUALITAS —
+  </div>
+</div>
 
-    <a href="index.html" class="btn home-btn-web"> Entrar al Sitio Web</a>
 
-    <a href="login.html" class="btn home-btn-app"> Entrar a la Aplicación Web</a>
+  <main class="container">
+    <div class="py-4 text-center">
+      <h1 data-i18n="welcome">Bienvenido a Taller Navarro Dava</h1>
+      <p data-i18n="description">Controla el avance de las reparaciones desde tu cuenta.</p>
 
+      <div class="d-flex justify-content-center gap-2">
+        <select id="langSwitch" class="form-select w-auto">
+          <option value="es">Español</option>
+          <option value="en">English</option>
+        </select>
+        <a class="btn btn-outline-primary" href="inicio_sesion.html">Iniciar sesión</a>
+      </div>
+    </div>
+
+    <section class="mb-4">
+      <h3>Trabajos</h3>
+      <div class="row">
+        <div class="col-md-4 mb-3">
+          <img class="img-fluid gallery-img" data-src="assets/img/img1.jpg"
+            src="assets/img/img1.jpg" alt="img1" style="cursor:pointer;">
+        </div>
+
+        <div class="col-md-4 mb-3">
+          <img class="img-fluid gallery-img" data-src="assets/img/img2.jpg"
+            src="assets/img/img2.jpg" alt="img2" style="cursor:pointer;">
+        </div>
+
+        <div class="col-md-4 mb-3">
+          <img class="img-fluid gallery-img" data-src="assets/img/img3.jpg"
+            src="assets/img/img3.jpg" alt="img3" style="cursor:pointer;">
+        </div>
+      </div>
+    </section>
+
+    <section class="mb-4">
+      <h3>Búsqueda de servicios</h3>
+      <form id="searchForm" class="input-group mb-2">
+        <input name="query" id="query" type="text" class="form-control" placeholder="Buscar servicios...">
+        <button class="btn btn-primary" type="submit">Buscar</button>
+      </form>
+      <div id="searchResults"></div>
+    </section>
+
+
+    <section class="mb-4">
+      <h3>Talleres</h3>
+
+      <div class="row g-2">
+        <div class="col-md-4">
+          <label class="form-label">Especialidades</label>
+          <select class="form-select">
+            <option>Enderezado y Pintura - Carros</option>
+            <option>Reparación de Motos</option>
+          </select>
+        </div>
+
+        <div class="col-md-4">
+          <label class="form-label">Tipo de vehículo</label>
+          <select id="vehicleType" class="form-select">
+            <option value="Carro">Carro</option>
+            <option value="Moto">Moto</option>
+          </select>
+        </div>
+
+        <div class="col-md-4">
+          <label class="form-label">Servicios disponibles</label>
+          <select id="vehicleService" class="form-select"></select>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h3>Acabados</h3>
+      <div id="carouselExample" class="carousel slide">
+        <div class="carousel-inner">
+          
+          <div class="carousel-item active">
+            <img src="assets/img/car1.jpg" class="d-block w-100" alt="car1">
+          </div>
+
+          <div class="carousel-item">
+            <img src="assets/img/car2.jpg" class="d-block w-100" alt="car2">
+          </div>
+
+          <div class="carousel-item">
+            <img src="assets/img/car3.jpg" class="d-block w-100" alt="car3">
+          </div>
+
+        </div>
+
+        <button class="carousel-control-prev" data-bs-target="#carouselExample" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" data-bs-target="#carouselExample" data-bs-slide="next">
+          <span class="carousel-control-next-icon"></span>
+        </button>
+      </div>
+    </section>
+
+    
+    <section class="mt-4">
+      <h3>Testimonios</h3>
+      <div class="card p-3">
+        <blockquote class="blockquote mb-0">
+          <p>"Excelente servicio y acabado de los vehiculos y excelente comunicación por la app."</p>
+          <footer class="blockquote-footer">Jorge Sanchez</footer>
+        </blockquote>
+      </div>
+    </section>
+
+    <section class="mt-4">
+      <h3>Contactos</h3>
+      <p>
+        Teléfono taller: <a href="tel:+50688888888">+506 8762-5981</a>
+        ·
+        Correo: <a href="mailto:info@tallernavarro.example">info@tallernavarro.com</a>
+      </p>
+    </section>
+
+  </main>
+
+
+  <div class="modal fade" id="lightboxModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-body p-0">
+          <img id="lightboxImage" src="" class="img-fluid" alt="">
+        </div>
+      </div>
+    </div>
   </div>
 
+
+
+<div style="max-width: 400px; margin: auto;">
+  <h3>Iterior del taller</h3>
+  <video controls style="width: 100%; border-radius:10px;">
+    <source src="assets/videos/video.mp4" type="video/mp4">
+    Tu navegador no soporta videos HTML5.
+  </video>
+</div>
+
+
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/main.js"></script>
+
+
+
 </body>
 </html>
