@@ -1,0 +1,138 @@
+{
+  "services": [
+    {
+      "id": 1,
+      "type": "Enderezado y Pintura",
+      "vehicle": "Carro",
+      "price": 350000,
+      "status": "Disponible"
+    },
+    {
+      "id": 2,
+      "type": "Cambio de aceite",
+      "vehicle": "Carro",
+      "price": 12000,
+      "status": "Disponible"
+    },
+    {
+      "id": 3,
+      "type": "Reparación de motor",
+      "vehicle": "Moto",
+      "price": 200000,
+      "status": "Disponible"
+    }
+  ],
+
+  "workshops": [
+    {
+      "id": 1,
+      "name": "Taller De Enderezado y Pintura",
+      "address": "9.9222595, -84.0824009",
+      "maps": "https://www.google.com/maps/place/Taller+Navarro+Dava/@9.9223731,-84.0825449,20.19z"
+    },
+    {
+      "id": 2,
+      "name": "MF Centro de Reparación Motos & Autos",
+      "address": "9.8984526, -84.0685505",
+      "maps": "https://www.google.com/maps/place/MF+Centro+Reparación+Motos+Autos/@9.8985185,-84.0686849,20.32z"
+    }
+  ],
+
+  "vehicles": [
+    {
+      "plate": "ABC123",
+      "model": "Toyota Corolla 2015",
+      "status": "En evaluación",
+      "notes": "Falta aprobación aseguradora QUALITAS"
+    },
+    {
+      "plate": "XYZ987",
+      "model": "Honda CBR 2018",
+      "status": "En reparación",
+      "notes": "Repuestos tardan 5 días"
+    }
+  ],
+
+  "parts": {
+    "carro": [
+      { "id": "puerta_dd", "name": "Puerta derecha delantera", "price": 120000 },
+      { "id": "puerta_di", "name": "Puerta izquierda delantera", "price": 120000 },
+      { "id": "puerta_td", "name": "Puerta derecha trasera", "price": 115000 },
+      { "id": "puerta_ti", "name": "Puerta izquierda trasera", "price": 115000 },
+      { "id": "parachoques_del", "name": "Parachoques delantero", "price": 150000 },
+      { "id": "parachoques_tras", "name": "Parachoques trasero", "price": 150000 },
+      { "id": "techo", "name": "Techo", "price": 180000 },
+      { "id": "capo", "name": "Capó", "price": 160000 },
+      { "id": "porton", "name": "Portón trasero", "price": 140000 },
+      { "id": "parrilla", "name": "Parrilla", "price": 90000 },
+      { "id": "aletas", "name": "Aletas", "price": 60000 },
+      { "id": "caliper", "name": "Caliper", "price": 25000 },
+      { "id": "pilares", "name": "Pilares de chasis", "price": 80000 },
+      { "id": "estribos", "name": "Estribos", "price": 70000 },
+      { "id": "espejo", "name": "Carcasa espejo retrovisor", "price": 25000 },
+      { "id": "manija", "name": "Manija de puertas", "price": 12000 },
+      { "id": "molduras", "name": "Molduras y vierteaguas", "price": 35000 },
+      { "id": "aleron", "name": "Alerones / spoilers", "price": 95000 },
+      { "id": "emblemas", "name": "Emblemas", "price": 8000 },
+      { "id": "guardabarros", "name": "Guardabarros", "price": 75000 }
+    ],
+
+    "moto": [
+      { "id": "deposito", "name": "Depósito de gasolina", "price": 90000 },
+      { "id": "carenados", "name": "Carenados completos", "price": 150000 },
+      { "id": "guardabarros", "name": "Guardabarros", "price": 45000 },
+      { "id": "tapas_l", "name": "Tapas laterales", "price": 30000 },
+      { "id": "paneles", "name": "Paneles", "price": 35000 },
+      { "id": "colin", "name": "Colín", "price": 25000 },
+      { "id": "espejo_m", "name": "Carcasa retrovisor", "price": 12000 },
+      { "id": "quilla", "name": "Quilla", "price": 40000 },
+      { "id": "chasis", "name": "Chasis", "price": 200000 },
+      { "id": "basculante", "name": "Basculante", "price": 120000 },
+      { "id": "llantas", "name": "Llantas (rines)", "price": 50000 },
+      { "id": "horquillas", "name": "Horquillas", "price": 45000 },
+      { "id": "manillar", "name": "Manillar", "price": 20000 },
+      { "id": "pinzas", "name": "Pinzas de freno", "price": 22000 },
+      { "id": "tapas_motor", "name": "Tapas del motor", "price": 30000 },
+      { "id": "estriberas", "name": "Estriberas", "price": 15000 },
+      { "id": "soportes", "name": "Soportes y subchasis", "price": 30000 }
+    ]
+  },
+
+  "mecanica": {
+    "carro": [
+      { "id": "mech_llantas", "name": "Cambio / Reparación de llantas", "price": 50000 },
+      { "id": "mech_transm", "name": "Reparación de transmisión", "price": 180000 },
+      { "id": "mech_elec", "name": "Reparación sistema eléctrico", "price": 90000 },
+      { "id": "mech_aceite", "name": "Cambio de aceite", "price": 25000 },
+      { "id": "mech_pastillas", "name": "Cambio de pastillas", "price": 45000 }
+    ],
+
+    "moto": [
+      { "id": "mech_rep_motor", "name": "Reparación de motor", "price": 150000 },
+      { "id": "mech_elec_moto", "name": "Sistema eléctrico", "price": 70000 },
+      { "id": "mech_susp", "name": "Ajuste de suspensión", "price": 40000 },
+      { "id": "mech_escape", "name": "Reparación sistema escape", "price": 60000 },
+      { "id": "mech_aceite_m", "name": "Cambio de aceite", "price": 20000 }
+    ]
+  },
+
+  "tow": {
+    "ligero": 50000,
+    "medio": 100000,
+    "pesado": 250000,
+    "moto_unit": 20000
+  },
+
+  "rules": {
+    "discount_threshold": 1000000,
+    "discount_threshold_pct": 0.10,
+    "pintura_total_pct": 0.20,
+    "moto_tow_discount": 0.30
+  },
+
+  "emailjs": {
+    "service": "service_qxllsjj",
+    "template": "template_xot4mtl",
+    "public_key": "at4COWsdEgfb7bSTG"
+  }
+}

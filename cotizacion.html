@@ -1,0 +1,641 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Taller Navarro </title>
+
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<link rel="stylesheet" href="assets/main.css">
+</head>
+<body>
+<div class="container">
+  <header>
+      <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand header-logo" href="index.html">
+              <button>
+        <img src="assets/logo.svg" alt="logo" width="32" height="32">
+      </button>
+      </a>
+        </ul>
+      </div>
+    </div>
+  </nav>
+          <h1>Taller Navarro </h1>
+    <div class="small">Cotizacion de servicios </div>
+  </header>
+
+  <div class="grid">
+
+    <div class="card">
+      <h2>Datos del cliente y opciones</h2>
+
+      <label>Seleccione Taller</label>
+      <select id="tallerSelect">
+        <option value="Taller Navarro">Taller Navarro</option>
+        <option value="MF Centro de Reparaciones">MF Centro de Reparaciones</option>
+      </select>
+
+      <label>Tipo de servicio</label>
+      <select id="serviceSelect">
+        <option value="pintura">Pintura</option>
+        <option value="grua">Servicio de grúas</option>
+        <option value="mecanica">Servicios mecánicos (aceite/frenos)</option>
+      </select>
+
+      <div id="vehicleBlock">
+        <label>Tipo de vehículo</label>
+        <select id="vehicleType">
+        <option value="" selected>Selecciona</option>
+        <option value="carro">Carro</option>
+        <option value="moto">Moto</option>
+        </select>
+    </div>
+
+
+      <div id="pinturaOptions" style="margin-top:12px;">
+        <label>Tipo de pintura</label>
+        <select id="paintOption">
+          <option value="por_pieza">Pintura por piezas</option>
+          <option value="pintura_total">Pintura total (descuento especial)</option>
+        </select>
+
+        <div class="info">Selecciona las piezas que quieras cotizar.</div>
+
+        <div class="parts-list" id="partsList"></div>
+
+      
+        <div id="pinturaInfo" class="pintura-note" style="display:none;">
+          <div id="pinturaTotalAmount">Monto pintura total: ₡0</div>
+          <div>Beneficio: <strong>Incluye cambio de aceite gratuito</strong> y <strong>servicio de grúa gratuito</strong> para una recogida dentro de Costa Rica. Indica dirección en el apartado de grúas.</div>
+        </div>
+      </div>
+
+  
+      <div id="gruaOptions" style="display:none; margin-top:12px;">
+        <label>¿Solicitar grúa para:</label>
+        <select id="towForVehicle">
+          <option value="carro">Carro</option>
+          <option value="moto">Moto</option>
+        </select>
+
+      
+        <div id="towCarBlock" style="margin-top:8px;">
+          <label>Tipo de carro para grúa</label>
+          <select id="towVehicleType">
+            <option value="ligero">Ligero (≤ 3.500 kg)</option>
+            <option value="medio">Medio (3.501 - 12.000 kg)</option>
+            <option value="pesado">Pesado (> 12.000 kg)</option>
+          </select>
+        </div>
+
+
+        <div id="towMotoBlock" style="display:none; margin-top:8px;">
+          <label>Servicio grúa para motos (cantidad de motos)</label>
+          <input id="towMotoCount" type="number" min="0" value="0">
+        </div>
+
+        <label>Dirección - recogida</label>
+        <input id="pickupAddress" type="text" placeholder="Dirección donde se recoge">
+
+        <label>Dirección - entrega</label>
+        <input id="dropoffAddress" type="text" placeholder="Dirección donde se deja">
+
+        <div class="small">Nota: si Pintura Total está activa, la grúa aparecerá incluida como beneficio (precio ₡0) — igualmente podés indicar direcciones.</div>
+      </div>
+
+      
+      <div id="mecanicaOptions" style="display:none; margin-top:12px;">
+        <label>Servicios mecánicos disponibles</label>
+        <div id="mecanicaList" style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+        
+        </div>
+      </div>
+
+      <div class="actions">
+        <button id="saveLocal">Guardar cotización </button>
+        <button id="loadLocal" class="secondary">Cargar última</button>
+      </div>
+
+      <div style="margin-top:10px;">
+        <button id="downloadManual" class="secondary">Descargar manual</button>
+        <div class="small">Esto es una ayuda para los nuevos usarios .</div>
+      </div>
+    </div>
+
+      
+    <div class="card">
+      <h2>Resumen de cotización</h2>
+
+      <table id="summaryTable">
+        <thead>
+          <tr><th>Concepto</th><th>Cantidad</th><th>Precio (₡)</th></tr>
+        </thead>
+        <tbody id="summaryBody">
+        </tbody>
+        <tfoot>
+          <tr><td colspan="2">Subtotal</td><td id="subtotal">₡0</td></tr>
+          <tr><td colspan="2">Descuento</td><td id="discount">₡0</td></tr>
+          <tr><td colspan="2"><strong>Total a pagar</strong></td><td id="finalTotal"><strong>₡0</strong></td></tr>
+        </tfoot>
+      </table>
+
+      <div style="margin-top:10px;">
+        <label>Nombre cliente</label>
+        <input id="clientName" type="text" placeholder="Nombre del cliente">
+
+        <label>Email (para enviar cotización)</label>
+        <input id="clientEmail" type="text" placeholder="ejemplo@correo.com">
+      </div>
+
+      <div class="actions" style="margin-top:10px;">
+        <button id="downloadQuote">Descargar cotización (PDF)</button>
+        <button id="sendEmail" class="secondary">Enviar por correo (EmailJS)</button>
+      </div>
+
+      <div class="info" id="notice"></div>
+    </div>
+  </div>
+
+  <footer class="small card" style="margin-top:18px;">
+                                        @2025/ Talelr navarro/ atencion al cliente: +506 8763-6734
+  </footer>
+</div>
+
+<script>
+
+const currency = (n)=>'₡' + Number(n || 0).toLocaleString('es-CR');
+const PRICE_UNIT = '₡';
+const LOCAL_KEY = 'PROYECTO_last_quote';
+
+
+const partsData = {
+  carro: [
+    {id:'puerta_dd', name:'Puerta derecha delantera', price:120000},
+    {id:'puerta_di', name:'Puerta izquierda delantera', price:120000},
+    {id:'puerta_td', name:'Puerta derecha trasera', price:115000},
+    {id:'puerta_ti', name:'Puerta izquierda trasera', price:115000},
+    {id:'parachoques_del', name:'Parachoques delantero', price:150000},
+    {id:'parachoques_tras', name:'Parachoques trasero', price:150000},
+    {id:'techo', name:'Techo', price:180000},
+    {id:'capo', name:'Capó', price:160000},
+    {id:'porton', name:'Portón trasero', price:140000},
+    {id:'parrilla', name:'Parrilla', price:90000},
+    {id:'aletas', name:'Aletas', price:60000},
+    {id:'caliper', name:'Caliper', price:25000},
+    {id:'pilares', name:'Pilares de chasis', price:80000},
+    {id:'estribos', name:'Estribos', price:70000},
+    {id:'espejo', name:'Carcasa espejo retrovisor', price:25000},
+    {id:'manija', name:'Manija de puertas', price:12000},
+    {id:'molduras', name:'Molduras y vierteaguas', price:35000},
+    {id:'aleron', name:'Alerones / spoilers', price:95000},
+    {id:'emblemas', name:'Emblemas', price:8000},
+    {id:'guardabarros', name:'Guardabarros', price:75000},
+  ],
+  moto: [
+    {id:'deposito', name:'Depósito de gasolina', price:90000},
+    {id:'carenados', name:'Carenados completos', price:150000},
+    {id:'guardabarros', name:'Guardabarros', price:45000},
+    {id:'tapas_l', name:'Tapas laterales', price:30000},
+    {id:'paneles', name:'Paneles', price:35000},
+    {id:'colin', name:'Colín', price:25000},
+    {id:'espejo', name:'Carcasa retrovisor', price:12000},
+    {id:'quilla', name:'Quilla', price:40000},
+    {id:'chasis', name:'Chasis', price:200000},
+    {id:'basculante', name:'Basculante', price:120000},
+    {id:'llantas', name:'Llantas (rines)', price:50000},
+    {id:'horquillas', name:'Horquillas', price:45000},
+    {id:'manillar', name:'Manillar', price:20000},
+    {id:'pinzas', name:'Pinzas de freno', price:22000},
+    {id:'tapas_motor', name:'Tapas del motor', price:30000},
+    {id:'estriberas', name:'Estriberas', price:15000},
+    {id:'soportes', name:'Soportes y subchasis', price:30000},
+  ]
+};
+
+const towPrices = {
+  ligero: 50000,
+  medio: 100000,
+  pesado: 250000,
+  moto_unit: 20000
+};
+
+
+const DISCOUNT_THRESHOLD = 1000000;  
+const DISCOUNT_THRESHOLD_PERCENT = 0.10;  
+const PINTURA_TOTAL_PERCENT = 0.20;  
+const MOTO_TOW_DISCOUNT = 0.30;  
+
+
+const EMAILJS_USER_ID = 'at4COWsdEgfb7bSTG'; 
+const EMAILJS_SERVICE_ID = 'service_qxllsjj';   
+const EMAILJS_TEMPLATE_ID = 'template_xot4mtl'; 
+
+if (emailjs){ 
+  try{ emailjs.init(EMAILJS_USER_ID); }catch(e){ console.log('EmailJS init error', e); }
+}
+
+  
+
+const elements = {
+  tallerSelect: document.getElementById('tallerSelect'),
+  serviceSelect: document.getElementById('serviceSelect'),
+  vehicleType: document.getElementById('vehicleType'),
+  partsList: document.getElementById('partsList'),
+  paintOption: document.getElementById('paintOption'),
+  pinturaInfo: document.getElementById('pinturaInfo'),
+  pinturaTotalAmount: document.getElementById('pinturaTotalAmount'),
+  towForVehicle: document.getElementById('towForVehicle'),
+  towVehicleType: document.getElementById('towVehicleType'),
+  towCarBlock: document.getElementById('towCarBlock'),
+  towMotoBlock: document.getElementById('towMotoBlock'),
+  towMotoCount: document.getElementById('towMotoCount'),
+  pickupAddress: document.getElementById('pickupAddress'),
+  dropoffAddress: document.getElementById('dropoffAddress'),
+  optAceite: document.getElementById('optAceite'),
+  optFrenos: document.getElementById('optFrenos'),
+  optCambioF: document.getElementById('optCambioF'),
+  optLiquido: document.getElementById('optLiquido'),
+  mecanicaList: document.getElementById('mecanicaList'),
+  partsListBlock: document.getElementById('partsList'),
+  pinturaOptions: document.getElementById('pinturaOptions'),
+  gruaOptions: document.getElementById('gruaOptions'),
+  mecanicaOptions: document.getElementById('mecanicaOptions'),
+  summaryBody: document.getElementById('summaryBody'),
+  subtotalEl: document.getElementById('subtotal'),
+  discountEl: document.getElementById('discount'),
+  finalTotalEl: document.getElementById('finalTotal'),
+  clientName: document.getElementById('clientName'),
+  clientEmail: document.getElementById('clientEmail'),
+  downloadQuote: document.getElementById('downloadQuote'),
+  sendEmail: document.getElementById('sendEmail'),
+  saveLocal: document.getElementById('saveLocal'),
+  loadLocal: document.getElementById('loadLocal'),
+  notice: document.getElementById('notice'),
+  downloadManual: document.getElementById('downloadManual'),
+  serviceSelect: document.getElementById('serviceSelect'),
+};
+
+let currentSelection = {
+  taller: elements.tallerSelect.value,
+  service: elements.serviceSelect.value,
+  vehicle: elements.vehicleType.value,
+  pieces: {}, 
+  towMotoCount: 0,
+  towVehicleType: elements.towVehicleType ? elements.towVehicleType.value : 'ligero',
+  opts: {aceite:false, frenos:false, cambioF:false, liquido:false}
+};
+
+function renderParts(){
+  elements.partsList.innerHTML = '';
+  const v = elements.vehicleType.value;
+  const list = partsData[v];
+  list.forEach(p=>{
+    const div = document.createElement('div');
+    div.className='part-item';
+    div.innerHTML = `
+      <div>
+        <div style="font-weight:600">${p.name}</div>
+        <div class="small">${currency(p.price)}</div>
+      </div>
+      <div style="display:flex; gap:8px; align-items:center;">
+        <input type="number" min="0" value="${currentSelection.pieces[p.id] || 0}" data-id="${p.id}" class="pieceQty" style="width:80px; padding:6px; border-radius:6px; border:1px solid #ddd;">
+      </div>
+    `;
+    elements.partsList.appendChild(div);
+  });
+
+
+  document.querySelectorAll('.pieceQty').forEach(inp=>{
+    inp.addEventListener('input', (e)=>{
+      const id = e.target.dataset.id;
+      const val = parseInt(e.target.value) || 0;
+      if (val <= 0) delete currentSelection.pieces[id];
+      else currentSelection.pieces[id] = val;
+      recalc();
+    });
+  });
+}
+
+
+function renderMecanica(){
+  elements.mecanicaList.innerHTML = '';
+  const v = elements.vehicleType.value;
+  let items = [];
+  if (v === 'carro'){
+    items = [
+      {id:'mech_llantas', label:'Cambio / Reparación de llantas', price:50000},
+      {id:'mech_transm', label:'Reparaciones de transmisiones', price:180000},
+      {id:'mech_elec', label:'Reparación del sistema eléctrico', price:90000},
+      {id:'mech_aceite', label:'Cambio de aceite', price:25000},
+      {id:'mech_pastillas', label:'Cambio de pastillas', price:45000}
+    ];
+  } else {
+    items = [
+      {id:'mech_rep_motor', label:'Reparación de motor', price:150000},
+      {id:'mech_elec_moto', label:'Reparación del sistema eléctrico', price:70000},
+      {id:'mech_susp', label:'Ajustes de suspensión', price:40000},
+      {id:'mech_escape', label:'Reparación del sistema de escape', price:60000},
+      {id:'mech_aceite_m', label:'Cambio de aceite', price:20000}
+    ];
+  }
+
+  items.forEach(it=>{
+    const lbl = document.createElement('label');
+    lbl.style.display='block';
+    lbl.innerHTML = `<input type="checkbox" data-price="${it.price}" id="${it.id}"> ${it.label} — ${currency(it.price)}`;
+    elements.mecanicaList.appendChild(lbl);
+    
+    document.getElementById(it.id).addEventListener('change', recalc);
+  });
+}
+
+
+function calcPinturaTotalAmount(){
+  const v = elements.vehicleType.value;
+  const list = partsData[v] || [];
+  let sum = 0;
+  list.forEach(p=> sum += p.price);
+  return sum;
+}
+
+function recalc(){
+  
+  elements.notice.textContent = '';
+
+  const v = elements.vehicleType.value;
+  const selectedParts = currentSelection.pieces;
+  let subtotal = 0;
+  const lines = [];
+
+  
+  const partsListRef = partsData[v];
+  partsListRef.forEach(p=>{
+    const qty = currentSelection.pieces[p.id] || 0;
+    if (qty>0){
+      const amount = p.price * qty;
+      subtotal += amount;
+      lines.push({concept: p.name, qty, price: p.price, total: amount});
+    }
+  });
+
+  
+  const mechChecks = elements.mecanicaList.querySelectorAll('input[type="checkbox"]');
+  mechChecks.forEach(cb=>{
+    if (cb.checked){
+      const price = Number(cb.dataset.price) || 0;
+      subtotal += price;
+      const label = cb.parentElement.textContent.trim();
+      lines.push({concept: label, qty:1, price, total: price});
+    }
+  });
+
+  
+  let towCost = 0;
+  let towIncludedByPinturaTotal = false;
+
+  
+  const isPinturaTotal = (elements.paintOption.value === 'pintura_total' && elements.serviceSelect.value === 'pintura');
+  if (isPinturaTotal){
+    const pinturaAmount = calcPinturaTotalAmount();
+    elements.pinturaInfo.style.display = 'block';
+    elements.pinturaTotalAmount.textContent = `Monto pintura total: ${currency(pinturaAmount)}`;
+    
+    lines.unshift({concept:'Pintura Total (beneficios incluidos)', qty:1, price:pinturaAmount, total:pinturaAmount});
+    lines.push({concept:'(Beneficio) Cambio de aceite incluido', qty:1, price:0, total:0});
+    lines.push({concept:'(Beneficio) Grúa incluida (1 traslado dentro de Costa Rica)', qty:1, price:0, total:0});
+    towIncludedByPinturaTotal = true;
+    
+  } else {
+    elements.pinturaInfo.style.display = 'none';
+  }
+
+  
+  if (elements.serviceSelect.value === 'grua' || (isPinturaTotal && (elements.pickupAddress.value || elements.dropoffAddress.value))){
+    
+    const towFor = elements.towForVehicle.value; 
+    if (towFor === 'moto'){
+      const count = parseInt(elements.towMotoCount.value) || 0;
+      if (count > 0){
+        let t = towPrices.moto_unit * count;
+        if (count >= 2) t = Math.round(t * (1 - MOTO_TOW_DISCOUNT));
+        if (!towIncludedByPinturaTotal){
+          towCost += t;
+          lines.push({concept:`Traslado motos (${count})`, qty:count, price:towPrices.moto_unit, total:t});
+        } else {
+          
+          lines.push({concept:`Traslado motos (${count}) (incluido)`, qty:count, price:0, total:0});
+        }
+      }
+    } else {
+
+      const ttype = elements.towVehicleType.value;
+      const base = towPrices[ttype] || 0;
+      if (!towIncludedByPinturaTotal){
+        towCost += base;
+        lines.push({concept:`Traslado vehículo (${ttype})`, qty:1, price: base, total: base});
+      } else {
+        lines.push({concept:`Traslado vehículo (${ttype}) (incluido)`, qty:1, price:0, total:0});
+      }
+    }
+    subtotal += towCost;
+  }
+
+  
+  let discount = 0;
+  
+  let piecesOnlyTotal = 0;
+  partsListRef.forEach(p=>{
+    const qty = currentSelection.pieces[p.id] || 0;
+    if (qty>0) piecesOnlyTotal += p.price * qty;
+  });
+
+  if (piecesOnlyTotal > DISCOUNT_THRESHOLD){
+    const applied = Math.round(piecesOnlyTotal * DISCOUNT_THRESHOLD_PERCENT);
+    discount += applied;
+    elements.notice.innerHTML = `<span class="towed">Se aplica ${Math.round(DISCOUNT_THRESHOLD_PERCENT*100)}% de descuento por monto de piezas > ${currency(DISCOUNT_THRESHOLD)} y servicio de grúa gratuito.</span>`;
+
+    if (!towIncludedByPinturaTotal && (elements.serviceSelect.value === 'grua')) {
+      subtotal = Math.max(0, subtotal - towCost);
+    }
+  }
+
+  if (isPinturaTotal){
+
+    const pinturaAmount = calcPinturaTotalAmount();
+    const d = Math.round(pinturaAmount * PINTURA_TOTAL_PERCENT);
+    discount += d;
+  }
+
+  
+  const total = Math.max(0, subtotal - discount);
+
+  
+  elements.summaryBody.innerHTML = '';
+  lines.forEach(l=>{
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${l.concept}</td><td>${l.qty}</td><td>${currency(l.total)}</td>`;
+    elements.summaryBody.appendChild(tr);
+  });
+
+  elements.subtotalEl.textContent = currency(subtotal);
+  elements.discountEl.textContent = '-' + currency(discount);
+  elements.finalTotalEl.textContent = currency(total);
+
+  
+  window.lastQuote = {
+    taller: elements.tallerSelect.value,
+    service: elements.serviceSelect.value,
+    vehicle: elements.vehicleType.value,
+    clientName: elements.clientName.value || '',
+    clientEmail: elements.clientEmail.value || '',
+    lines, subtotal, discount, total,
+    pickup: elements.pickupAddress.value || '',
+    dropoff: elements.dropoffAddress.value || ''
+  };
+}
+
+
+elements.vehicleType.addEventListener('change', ()=>{ 
+  currentSelection.pieces = {}; 
+  renderParts();
+  renderMecanica();
+  recalc();
+});
+
+elements.paintOption.addEventListener('change', ()=>{
+  recalc();
+});
+
+elements.serviceSelect.addEventListener('change', ()=>{
+  const val = elements.serviceSelect.value;
+  elements.pinturaOptions.style.display = (val==='pintura') ? 'block' : 'none';
+  elements.gruaOptions.style.display = (val==='grua') ? 'block' : 'none';
+  elements.mecanicaOptions.style.display = (val==='mecanica') ? 'block' : 'none';
+  recalc();
+});
+
+
+elements.towForVehicle.addEventListener('change', ()=>{
+  const v = elements.towForVehicle.value;
+  if (v === 'carro'){
+    elements.towCarBlock.style.display = 'block';
+    elements.towMotoBlock.style.display = 'none';
+  } else {
+    elements.towCarBlock.style.display = 'none';
+    elements.towMotoBlock.style.display = 'block';
+  }
+  recalc();
+});
+
+elements.towMotoCount.addEventListener('input', recalc);
+elements.towVehicleType.addEventListener('change', recalc);
+
+
+elements.saveLocal.addEventListener('click', ()=>{ 
+  if (!window.lastQuote) { alert('No hay cotización para guardar.'); return; }
+  localStorage.setItem(LOCAL_KEY, JSON.stringify(window.lastQuote));
+  alert('Cotización guardada localmente.');
+});
+elements.loadLocal.addEventListener('click', ()=>{ 
+  const data = localStorage.getItem(LOCAL_KEY);
+  if (!data){ alert('No hay cotización guardada.'); return; }
+  const q = JSON.parse(data);
+
+  elements.tallerSelect.value = q.taller || elements.tallerSelect.value;
+  elements.serviceSelect.value = q.service || elements.serviceSelect.value;
+  elements.vehicleType.value = q.vehicle || elements.vehicleType.value;
+  elements.clientName.value = q.clientName || '';
+  elements.clientEmail.value = q.clientEmail || '';
+  elements.pickupAddress.value = q.pickup || '';
+  elements.dropoffAddress.value = q.dropoff || '';
+  
+  currentSelection.pieces = {}; 
+  renderParts();
+  renderMecanica();
+  recalc();
+  alert('Cotización cargada (revisar y completar piezas si aplica).');
+});
+
+
+
+elements.downloadQuote.addEventListener('click', async ()=>{
+  if (!window.lastQuote) { alert('No hay cotización para descargar.'); return; }
+  const q = window.lastQuote;
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({unit:'pt', format:'a4'});
+  doc.setFontSize(18);
+  doc.text(q.taller, 40, 50);
+  doc.setFontSize(12);
+  doc.text(`Cliente: ${q.clientName}`, 40, 80);
+  doc.text(`Email: ${q.clientEmail}`, 40, 98);
+  doc.text(`Servicio: ${q.service}`, 40, 116);
+  doc.text(`Vehículo: ${q.vehicle}`, 40, 134);
+  let y=160;
+  doc.setFontSize(11);
+  doc.text(' Items y subtotales:', 40, y);
+  y+=16;
+  q.lines.forEach(l=>{
+    doc.text(`${l.concept} - Cant: ${l.qty} - Total: ${currency(l.total)}`, 48, y);
+    y+=14;
+    if (y>720){ doc.addPage(); y=40; }
+  });
+  y+=12;
+  doc.text(`Subtotal: ${currency(q.subtotal)}`, 40, y); y+=14;
+  doc.text(`Descuento: -${currency(q.discount)}`, 40, y); y+=14;
+  doc.text(`Total a pagar: ${currency(q.total)}`, 40, y); y+=20;
+  if (q.pickup) doc.text(`Recogida: ${q.pickup}`, 40, y), y+=12;
+  if (q.dropoff) doc.text(`Entrega: ${q.dropoff}`, 40, y), y+=12;
+
+  doc.save(`cotizacion_${(q.clientName||'cliente').replace(/\s+/g,'_')}.pdf`);
+});
+
+
+elements.sendEmail.addEventListener('click', async ()=>{
+  if (!window.lastQuote) { alert('No hay cotización para enviar.'); return; }
+  if (!EMAILJS_USER_ID || EMAILJS_USER_ID.includes('TU_PUBLIC_KEY')){ alert('Revisa tu correo'); return; }
+  const q = window.lastQuote;
+
+  const piecesText = q.lines.map(l=>`${l.concept} (x${l.qty}) - ${currency(l.total)}`).join('\n');
+
+  const templateParams = {
+    workshop: q.taller,
+    client_name: q.clientName,
+    client_email: q.clientEmail,
+    service: q.service,
+    vehicle: q.vehicle,
+    pieces_list: piecesText,
+    subtotal: currency(q.subtotal),
+    discount: '-' + currency(q.discount),
+    total: currency(q.total),
+    pickup: q.pickup || '',
+    dropoff: q.dropoff || ''
+  };
+
+  try{
+    const resp = await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams);
+    alert('Correo enviado correctamente (revisa la bandeja de salida).');
+    console.log('EmailJS resp', resp);
+  }catch(err){
+    console.error('EmailJS error', err);
+    alert('Error al enviar correo. Ver consola para más detalles.');
+  }
+});
+<button id="downloadManual" class="secondary">Descargar manual</button>
+
+
+renderParts();
+renderMecanica();
+recalc();
+
+
+setInterval(recalc, 900); 
+</script>
+<script src="assets/main.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</body>
+</html>
